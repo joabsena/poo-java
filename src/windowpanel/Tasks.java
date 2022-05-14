@@ -22,6 +22,7 @@ public class Tasks extends Composite {
 
 	
 	public static void main(String[] args) {
+		System.out.println(TaskRepository.listAll());
 		Display display = new Display();
 		Shell shell = new Shell(display);
 		shell.setLayout(new GridLayout(1, false));

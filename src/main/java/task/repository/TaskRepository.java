@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -45,23 +46,21 @@ public class TaskRepository {
 		try {
 			Class.forName("org.postgresql.Driver");
 			connection = DriverManager.getConnection(URL, USER, PASSWORD);
-			ArrayList<Task> tasks = new ArrayList<Task>();
-
+			List<Task> tasks = new ArrayList<Task>();
+			String id;
+			String name;
+			String description;
 			
 			PreparedStatement stmt = connection.prepareStatement(LIST_ALL);
 			
 			ResultSet rs = stmt.executeQuery();
 			
 			while (rs.next()) {
-				tasks.forEach(t -> { 
-					try {
-						t.setId(rs.getString(1));
-						t.setName(rs.getString(2));
-						t.setDescription(rs.getString(3));
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
-				});
+				Task t = new Task();
+				t.setId(rs.getString(1));
+				t.setName(rs.getString(2));
+				t.setDescription(rs.getString(3));
+				tasks.add(t);
 			}
 			
 			stmt.execute();
